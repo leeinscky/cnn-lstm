@@ -183,10 +183,15 @@ class UCF101(data.Dataset):
         if self.temporal_transform is not None:
             frame_indices = self.temporal_transform(frame_indices)
         clip = self.loader(path, frame_indices)
+        
+        print(f"[datasets/ucf101.py] 正在执行 class UCF101.__getitem__ len(clip)={len(clip)}, path = {path}, frame_indices = {frame_indices}")
+        # len(clip)=16, path = ./data/image_data/bowling/v_Bowling_g02_c01, frame_indices = [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
+        
         if self.spatial_transform is not None:
             self.spatial_transform.randomize_parameters()
             clip = [self.spatial_transform(img) for img in clip]
         clip = torch.stack(clip, 0)
+        print(f"[datasets/ucf101.py] 正在执行 class UCF101.__getitem__ clip.shape = {clip.shape}") # clip.shape = torch.Size([16, 3, 150, 150])
 
         target = self.data[index]
         if self.target_transform is not None:

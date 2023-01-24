@@ -5,3 +5,4 @@
 *.pth
 *.avi
 /data
+tf_logs/
