@@ -60,8 +60,6 @@ class CNNLSTM(nn.Module):
 
 
 
-
-
 """ 参考LSTM的测试代码加深理解
 假设有100个句子（sequence）,每个句子里有5个词，batch_size=3，embedding_size=10
 

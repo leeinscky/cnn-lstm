@@ -184,14 +184,21 @@ class UCF101(data.Dataset):
             frame_indices = self.temporal_transform(frame_indices)
         clip = self.loader(path, frame_indices)
         
-        print(f"[datasets/ucf101.py] 正在执行 class UCF101.__getitem__ len(clip)={len(clip)}, path = {path}, frame_indices = {frame_indices}")
+        # print(f"[datasets/ucf101.py] 正在执行 class UCF101.__getitem__ len(clip)={len(clip)}, path = {path}, frame_indices = {frame_indices}")
         # len(clip)=16, path = ./data/image_data/bowling/v_Bowling_g02_c01, frame_indices = [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
+        print(f"[datasets/ucf101.py] 正在执行 class UCF101.__getitem__ clip={clip}")
+        """ clip=[
+            <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9EBCF518>, 
+            <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C5D4080>, 
+            <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C5736D8>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C579470>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C579710>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C579780>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C5797F0>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C579860>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C5798D0>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C579940>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C5799B0>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C579A20>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C579A90>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C579B00>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C579B70>, <PIL.Image.Image image mode=RGB size=320x240 at 0x151A9C579BE0>]
+         """
         
         if self.spatial_transform is not None:
             self.spatial_transform.randomize_parameters()
-            clip = [self.spatial_transform(img) for img in clip]
+            clip = [self.spatial_transform(img) for img in clip] 
+            # spatial_transform (callable, optional): A function/transform that  takes in an PIL image and returns a transformed version. E.g, ``transforms.RandomCrop``
         clip = torch.stack(clip, 0)
-        print(f"[datasets/ucf101.py] 正在执行 class UCF101.__getitem__ clip.shape = {clip.shape}") # clip.shape = torch.Size([16, 3, 150, 150])
+        # print(f"[datasets/ucf101.py] 正在执行 class UCF101.__getitem__ clip.shape = {clip.shape}") # clip.shape = torch.Size([16, 3, 150, 150])
 
         target = self.data[index]
         if self.target_transform is not None:
