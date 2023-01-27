@@ -15,7 +15,7 @@ class CNNLSTM(nn.Module):
         self.fc1 = nn.Linear(256, 128)
         self.fc2 = nn.Linear(128, num_classes)
        
-    def forward(self, x_3d): # 整个逻辑是将图片序列输入到CNN中，得到每一帧的特征，然后将这些特征输入到LSTM中，得到最后的分类结果
+    def forward(self, x_3d): # 整个逻辑是将图片序列（一共16帧，这个16是自己设置的）输入到CNN中，得到每一帧的特征，然后将这些特征输入到LSTM中，得到最后的分类结果
         # print(f'[cnnlstm.py] 正在执行CNNLSTM类的forward函数，输入的x_3d的shape为{x_3d.shape}') # torch.Size([8, 16, 3, 150, 150]) 8表示batch_size，16表示16帧，3表示3个通道，150表示150*150的图像
         hidden = None
         for t in range(x_3d.size(1)): # x_3d.size(1)表示16帧，即将16帧的图像输入到CNN中，得到16帧的特征, t表示第t帧
@@ -63,10 +63,10 @@ class CNNLSTM(nn.Module):
 """ 参考LSTM的测试代码加深理解
 假设有100个句子（sequence）,每个句子里有5个词，batch_size=3，embedding_size=10
 
-此时，各个参数为：
-input_size=embedding_size=10
-batch=batch_size=3
-seq_len=5
+此时，LSTM forward函数的第一个参数inputs的各个参数为：
+    1、seq_len=5
+    2、batch=batch_size=3
+    3、input_size=embedding_size=10
 
 另外设置hidden_size=20, num_layers=1
 ————————————————
